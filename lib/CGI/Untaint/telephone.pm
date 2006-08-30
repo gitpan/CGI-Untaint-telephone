@@ -4,7 +4,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use base 'CGI::Untaint::object';
 
@@ -12,13 +12,13 @@ use base 'CGI::Untaint::object';
 # it should really try and guarantee that if there ARE dots and dashes,
 # that they can't occur next to each other..
 sub _untaint_re {
-    return qr/^\+?[-\.\d]{2,24}$/;
+    return qr/^\+?\d[-\.\d ]{1,24}$/;
 }
 
 sub is_valid {
     my $self = shift;
     my $value = $self->value;
-    $value =~ s/[-\.]//g;
+    $value =~ s/[-\.\s]//g;
     return $self->value($value);
 }   
 
